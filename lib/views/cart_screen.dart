@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../bloc/home_bloc.dart';
 import '../bloc/home_state.dart';
@@ -19,6 +20,8 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+
       backgroundColor: Colors.white,
 
       body: BlocBuilder<HomeBloc, HomeState>(
@@ -26,7 +29,7 @@ class _HistoryPageState extends State<HistoryPage> {
           if (state is HomeInitialState) {
             return const Center(
                 child: Text(
-                  "NO HISTORY TO SHOW!\n TOTAL: 0\$",
+                  "ADD ITEMS TO CART TO VIEW HISTORY!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -42,7 +45,7 @@ class _HistoryPageState extends State<HistoryPage> {
             if (state.history.isEmpty) {
               return const Center(
                   child: Text(
-                    "NO HISTORY TO SHOW!\n TOTAL: 0\$",
+                    "ADD ITEMS TO CART TO VIEW HISTORY!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
@@ -54,14 +57,17 @@ class _HistoryPageState extends State<HistoryPage> {
               num TotalPrice = 0;
               // ignore: no_leading_underscores_for_local_identifiers
               void _incrementCounter() {
-                for (var element in state.history) {
-                  TotalPrice += element.foodPrice;
+                for (var i in state.history) {
+                  TotalPrice += i.price;
                 }
               }
 
               _incrementCounter();
               return Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+
                 children: [
+
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -71,16 +77,21 @@ class _HistoryPageState extends State<HistoryPage> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 5),
+                    //margin: const EdgeInsets.only(top: 5),
                     height: MediaQuery.of(context).size.height * .84,
-                    child: ListView.builder(
+                    child: ListView.separated(
+                      physics: BouncingScrollPhysics(),
+                      separatorBuilder: (context, index) => const Divider(
+                        color: Colors.black,
+                      ),
                       itemCount: state.history.length,
+                      scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        final asbezaVal = state.history[index];
+                        final item = state.history[index];
                         return Column(
+
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
@@ -89,50 +100,37 @@ class _HistoryPageState extends State<HistoryPage> {
                                           image: DecorationImage(
                                               fit: BoxFit.contain,
                                               image: NetworkImage(
-                                                  asbezaVal.image))),
-                                      height:
-                                      MediaQuery.of(context).size.height *
-                                          .1,
-                                      width: MediaQuery.of(context).size.width *
-                                          .3,
+                                                  item.image))),
+                                      height: MediaQuery.of(context).size.height / 10,
+                                      width: MediaQuery.of(context).size.width / 6,
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 11, vertical: 5),
+                                          horizontal: 11, vertical: 200),
                                     ),
                                     SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          .4,
+                                      width: MediaQuery.of(context).size.width * .4,
                                       child: Column(
                                         crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                         children: [
-                                          Text(asbezaVal.foodTitle),
+                                          Text(item.title),
                                           Text(
-                                            "${asbezaVal.foodPrice}\$",
+                                            "${item.price}\$",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w900),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                          ),],),),],),],),
                             const SizedBox(
                               height: 30,
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              );
-            }
-          }
-          return Container();
-        },
-      ),
-    );
-  }
+                            )],);},
+                    ),),
+                ],);
+            }}
+                    return Container();},),
+      bottomNavigationBar: GNav(
+      tabs: [
+        GButton(icon: Icons.shopping_cart,text: "History",onPressed: (){Navigator.pushNamed(context, "/cart");},),
+        GButton(icon: Icons.home, text: "Home",onPressed: (){Navigator.pushNamed(context, "/");},),
+      GButton(icon: Icons.account_circle,text: "Profile",onPressed: (){Navigator.pushNamed(context, "/profile");},),
+    const GButton(icon: Icons.settings,)],
+      )
+    );}
 }

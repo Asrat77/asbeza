@@ -45,17 +45,20 @@ class _home_screenState extends State<home_screen> {
             builder: (context, state) {
               if (state is HomeInitialState) {
                 return Center(
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(200, 50),
-                        alignment: Alignment.center,
-                        elevation: 0),
-                    onPressed: () {
-                      BlocProvider.of<HomeBloc>(context).add(
-                           GetDataButtonPressed()  );
-                    },
-                    icon: const Icon(Icons.shopping_basket_rounded),
-                    label: const Text("Get Started"),
+                  child: Container(
+                    color: Colors.blueGrey,
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(200, 50),
+                          alignment: Alignment.center,
+                          elevation: 0),
+                      onPressed: () {
+                        BlocProvider.of<HomeBloc>(context).add(
+                             GetDataButtonPressed()  );
+                      },
+                      icon: const Icon(Icons.shopping_basket_rounded),
+                      label: const Text("Get Started"),
+                    ),
                   ),
                 );
               }
@@ -66,8 +69,12 @@ class _home_screenState extends State<home_screen> {
               }
               else if (state is HomeSuccessState) {
                 return Center(
-                  child: ListView.builder(
-                      itemCount: state.asbeza?.length,
+                  child: ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    itemCount: state.asbeza.length,
+                      separatorBuilder: (context, index) => const Divider(
+                      color: Colors.black,
+                    ),
                       itemBuilder: (context, iterator){
                         final Asbeza item = state.asbeza![iterator];
                         return Column(
@@ -82,6 +89,7 @@ class _home_screenState extends State<home_screen> {
                                           image: DecorationImage(
                                               fit: BoxFit.contain,
                                               image: NetworkImage(item.image))),
+
                                       height: MediaQuery.of(context).size.height / 10,
                                       width: MediaQuery.of(context).size.width / 3,
                                       margin: const EdgeInsets.symmetric(

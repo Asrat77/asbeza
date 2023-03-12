@@ -1,4 +1,5 @@
 import 'package:asbeza/views/components/navBar.dart';
+import 'package:asbeza/views/components/profile_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -50,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget fillCards() {
     List<Widget> widgets = _simCard
         .map((SimCard sim) => Text(
-        'Sim Card Number: (${sim.countryPhonePrefix}) - ${sim.number}'))
+        'Tele Number: (${sim.countryPhonePrefix}) - ${sim.number}',style: TextStyle(fontSize: 20),),)
         .toList();
     return Column(children: widgets);
   }
@@ -59,33 +60,37 @@ class _ProfilePageState extends State<ProfilePage> {
     return MaterialApp(
       home: Scaffold(
         bottomNavigationBar: GNav(
-
-
       tabs: [
-      GButton(icon: Icons.home, text: "Home",onPressed: (){Navigator.pushNamed(context, "/");},), GButton(icon: Icons.shopping_cart,text: "History",onPressed: (){Navigator.pushNamed(context, "/cart");},),
-      GButton(icon: Icons.account_circle,text: "Profile",onPressed: (){Navigator.pushNamed(context, "/profile");},),
-      GButton(icon: Icons.settings,)
+        GButton(icon: Icons.account_circle,text: "Profile",onPressed: (){Navigator.pushNamed(context, "/profile");},),
+
+        GButton(icon: Icons.home, text: "Home",onPressed: (){Navigator.pushNamed(context, "/");},), GButton(icon: Icons.shopping_cart,text: "History",onPressed: (){Navigator.pushNamed(context, "/cart");},),
+      const GButton(icon: Icons.settings,)
 
       ],
 
     ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(100.0),
+            padding: const EdgeInsets.all(120.0),
             child: Column(
               children:  <Widget>[
                 const CircleAvatar(
                   radius: 90,
                   backgroundImage: AssetImage("assets/user-profile-icon.png"),
                 ),
-                Container(
-                  //child: Column,
-                )
-              ],
+                InfoCard(text: "Name", iconVal: Icons.contact_page_sharp),
+                    fillCards()],
+                  ),
+                ),
+
+              
+
             ),
           ),
-        ),
-      ),
+
+
+
     );
   }
 }
+

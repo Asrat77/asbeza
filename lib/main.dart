@@ -2,6 +2,7 @@ import 'package:asbeza/views/cart_screen.dart';
 import 'package:asbeza/views/home_screen.dart';
 import 'package:asbeza/views/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/home_bloc.dart';
@@ -9,6 +10,8 @@ import 'bloc/home_bloc.dart';
 
 void main() {
   runApp(const MyApp());
+  SystemChrome.setEnabledSystemUIMode([SystemUiOverlay.bottom] as SystemUiMode);
+
 }
 
 class MyApp extends StatelessWidget {

@@ -19,5 +19,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final asbeza = await _apiServiceProvider.fetchAsbeza();
       emit(HomeSuccessState(asbeza: asbeza!, history: history));
   });
+    on<HistoryEvent>((event, emit) => {history.add(event.data)});
 }
 }
