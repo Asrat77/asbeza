@@ -1,3 +1,4 @@
+import 'package:asbeza/views/cart_screen.dart';
 import 'package:asbeza/views/home_screen.dart';
 import 'package:asbeza/views/profile_page.dart';
 import 'package:flutter/material.dart';
@@ -23,9 +24,12 @@ class MyApp extends StatelessWidget {
         routes: {
           "/": (context)=> const home_screen(),
           "/profile": (context)=> const ProfilePage(),
+          "/cart": (context)=> const HistoryPage(),
+
         },
 
         title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

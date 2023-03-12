@@ -10,12 +10,14 @@ import '../data_provider/apiService.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _apiServiceProvider = ApiService();
+  List history = [];
+
 
   HomeBloc() : super(HomeInitialState()) {
     on<GetDataButtonPressed>((event, emit) async {
       emit(HomeLoadingState());
       final asbeza = await _apiServiceProvider.fetchAsbeza();
-      emit(HomeSuccessState(asbeza: asbeza));
+      emit(HomeSuccessState(asbeza: asbeza!, history: history));
   });
 }
 }

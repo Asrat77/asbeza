@@ -16,11 +16,10 @@ class HomeLoadingState extends HomeState {
 }
 
 class HomeSuccessState extends HomeState {
-  List? asbeza;
+  List asbeza;
+  List history;
 
-  HomeSuccessState({
-      required this.asbeza,}
-      );
+  HomeSuccessState({required this.asbeza, required this.history});
 
   @override
   // TODO: implement props

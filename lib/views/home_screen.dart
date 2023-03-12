@@ -1,9 +1,11 @@
 import 'package:asbeza/bloc/home_state.dart';
+import 'package:asbeza/views/components/navBar.dart';
 import 'package:asbeza/views/itemsCard.dart';
 import 'package:asbeza/views/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:asbeza/models/asbeza.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import 'package:asbeza/data_provider/apiService.dart';
@@ -25,21 +27,20 @@ class _home_screenState extends State<home_screen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Asbeza",
-            style: TextStyle(
-                color: Colors.blueGrey
-            ),),
-          backgroundColor: Colors.black54,
-          actions: [
-            IconButton(onPressed: () {
 
-              Navigator.pushNamed( context,"/profile");
-            },
-            icon: const Icon(Icons.account_circle_outlined,),
-            )      ],
 
-        ),
+        bottomNavigationBar: GNav(
+
+
+    tabs: [
+    GButton(icon: Icons.home, text: "Home",onPressed: (){Navigator.pushNamed(context, "/");},),
+    GButton(icon: Icons.shopping_cart,text: "History",onPressed: (){Navigator.pushNamed(context, "/cart");},),
+    GButton(icon: Icons.account_circle,text: "Profile",onPressed: (){Navigator.pushNamed(context, "/profile");},),
+    GButton(icon: Icons.settings,text: "Profile",)
+
+    ],
+
+    ),
         body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               if (state is HomeInitialState) {
@@ -107,7 +108,10 @@ class _home_screenState extends State<home_screen> {
                                   ],
                                 ),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      BlocProvider.of<HomeBloc>(context)
+                                          .add(HistoryEvent(asbeza: item));
+                                    },
                                     icon: const Icon(Icons.add_circle))
                               ],
                             ),
