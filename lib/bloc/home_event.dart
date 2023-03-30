@@ -1,11 +1,11 @@
-import 'package:equatable/equatable.dart';
+part of 'home_bloc.dart';
 
-import '../models/asbeza.dart';
+abstract class HomeEvent extends Equatable {
+  const HomeEvent();
+}
 
-abstract class HomeEvent extends Equatable {}
-
-class GetDataButtonPressed extends HomeEvent {
-
+class FetchEvent extends HomeEvent {
+  const FetchEvent();
   @override
   List<Object> get props => [];
 }
@@ -18,4 +18,13 @@ class HistoryEvent extends HomeEvent {
   List<Object> get props => [];
 
   get data => asbeza;
+}
+class RemoveItemEvent extends HomeEvent{
+  final int index;
+  RemoveItemEvent(
+      this.index
+      );
+  @override
+  List<Object> get props => [];
+   get data => index;
 }

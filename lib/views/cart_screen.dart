@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../bloc/home_bloc.dart';
-import '../bloc/home_state.dart';
+
 
 
 
@@ -85,7 +85,7 @@ class _HistoryPageState extends State<HistoryPage> {
                         color: Colors.black,
                       ),
                       itemCount: state.history.length,
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection: Axis.vertical,
                       itemBuilder: (BuildContext context, int index) {
                         final item = state.history[index];
                         return Column(
@@ -104,7 +104,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                       height: MediaQuery.of(context).size.height / 10,
                                       width: MediaQuery.of(context).size.width / 6,
                                       margin: const EdgeInsets.symmetric(
-                                          horizontal: 11, vertical: 200),
+                                          horizontal: 11, vertical: 20),
                                     ),
                                     SizedBox(
                                       width: MediaQuery.of(context).size.width * .4,
@@ -119,7 +119,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                                 fontWeight: FontWeight.w900),
                                           ),],),),],),],),
                             const SizedBox(
-                              height: 30,
+                              height: 1,
                             )],);},
                     ),),
                 ],);

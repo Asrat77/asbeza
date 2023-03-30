@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget fillCards() {
     List<Widget> widgets = _simCard
         .map((SimCard sim) => Text(
-        'Tele Number: (${sim.countryPhonePrefix}) - ${sim.number}',style: TextStyle(fontSize: 20),),)
+        'Tele Number: (${sim.number}',style: TextStyle(fontSize: 20),),)
         .toList();
     return Column(children: widgets);
   }

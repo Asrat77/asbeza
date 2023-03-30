@@ -1,4 +1,4 @@
-import 'package:asbeza/bloc/home_state.dart';
+
 import 'package:asbeza/views/components/navBar.dart';
 import 'package:asbeza/views/itemsCard.dart';
 import 'package:asbeza/views/profile_page.dart';
@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:asbeza/models/asbeza.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../bloc/home_bloc.dart';
-import '../bloc/home_event.dart';
+
 import 'package:asbeza/data_provider/apiService.dart';
 
 ApiService service = ApiService();
@@ -44,25 +44,9 @@ class _home_screenState extends State<home_screen> {
         body: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               if (state is HomeInitialState) {
-                return Center(
-                  child: Container(
-                    color: Colors.blueGrey,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(200, 50),
-                          alignment: Alignment.center,
-                          elevation: 0),
-                      onPressed: () {
-                        BlocProvider.of<HomeBloc>(context).add(
-                             GetDataButtonPressed()  );
-                      },
-                      icon: const Icon(Icons.shopping_basket_rounded),
-                      label: const Text("Get Started"),
-                    ),
-                  ),
-                );
+                BlocProvider.of<HomeBloc>(context).add(const FetchEvent());
               }
-              if (state is HomeLoadingState) {
+                else if (state is HomeLoadingState) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
@@ -76,7 +60,7 @@ class _home_screenState extends State<home_screen> {
                       color: Colors.black,
                     ),
                       itemBuilder: (context, iterator){
-                        final Asbeza item = state.asbeza![iterator];
+                        final Asbeza asb = state.asbeza![iterator];
                         return Column(
                           children: [
                             Row(
@@ -88,7 +72,7 @@ class _home_screenState extends State<home_screen> {
                                       decoration: BoxDecoration(
                                           image: DecorationImage(
                                               fit: BoxFit.contain,
-                                              image: NetworkImage(item.image))),
+                                              image: NetworkImage(asb.image))),
 
                                       height: MediaQuery.of(context).size.height / 10,
                                       width: MediaQuery.of(context).size.width / 3,
@@ -103,9 +87,9 @@ class _home_screenState extends State<home_screen> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(item.title),
+                                            Text(asb.title),
                                             Text(
-                                              "${item.price} Birr",
+                                              "${asb.price} Birr",
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.w900),
                                             ),
@@ -117,8 +101,15 @@ class _home_screenState extends State<home_screen> {
                                 ),
                                 IconButton(
                                     onPressed: () {
+                                      setState(() {
+                                        for(var item in state.history){
+                                          if(item.id==asb.id){
+                                            continue;
+                                          }
+                                        }
+                                      });
                                       BlocProvider.of<HomeBloc>(context)
-                                          .add(HistoryEvent(asbeza: item));
+                                      .add(HistoryEvent(asbeza: asb));
                                     },
                                     icon: const Icon(Icons.add_circle))
                               ],
