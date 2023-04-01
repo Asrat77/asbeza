@@ -37,7 +37,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   ),
                 ));
           }
-          if (state is HomeLoadingState) {
+          else if (state is HomeLoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -117,7 +117,18 @@ class _HistoryPageState extends State<HistoryPage> {
                                             "${item.price}\$",
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.w900),
-                                          ),],),),],),],),
+                                          ),
+                                        IconButton(onPressed: (){
+                                            BlocProvider.of<HomeBloc>(context)
+                                                .add(RemoveItemEvent(index));
+                                            setState(() {});
+                                        },
+                                          icon: const Icon(
+                                            Icons.remove_circle,
+                                            color: Colors.red,
+                                          ),
+
+                                        )],),),],),],),
                             const SizedBox(
                               height: 1,
                             )],);},
